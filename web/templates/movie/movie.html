@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>Site</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+
+</head>
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    h3 {
+        text-align: center;
+    }
+
+    .butonout {
+        text-align: center;
+    }
+
+    body {
+        padding-top: 60px;
+        margin: 0;
+        font-family: sans-serif;
+        background: linear-gradient(to right, #c04848, #480048)
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    li {
+        float: right;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+        background-color: rgb(223, 73, 73);
+    }
+</style>
+
+<body>
+    <ul>
+        <li><a href="signup">Sign Up</a></li>
+        <li><a href="signin">Sign In</a></li>
+        <li><a href="/">Home</a></li>
+    </ul>
+    
+
+    <h1>Welcome To the Site</h1>
+
+    {% if user.is_authenticated %}
+    <h3>hello {{fname}} you are logged in</h3>
+
+    <form method="post" action="movierec">
+        {% csrf_token %}
+        <label for="">What Movie You Like</label>
+        <input type="text" id="film" name="filmval">
+        <input type="submit" value="Submit">
+        <label for="">{{c}}</label>
+        <label for=""></label>
+    </form>
+
+
+
+
+
+    {% else %}
+    <h3>hello you are not logged in</h3>
+
+
+    {% endif %}
+
+    <script src="" async defer></script>
+</body>
+
+</html>

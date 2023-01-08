@@ -1,0 +1,82 @@
+h2 {
+    text-align: center;
+}
+
+body {
+    padding-top: 60px;
+    margin: 0;
+    font-family: sans-serif;
+    background: linear-gradient(to right, #c04848, #480048)
+}
+
+.login-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: antiquewhite;
+}
+
+.login-form h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"],
+.login-form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgb(131, 8, 8);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.buton {
+    width: 25%;
+    padding: 10px;
+    margin: 5px;
+    background-color: #fffbfb;
+    color: rgb(109, 5, 5);
+    border: 1px solid rgb(146, 5, 5);
+    border-radius: 4px;
+    cursor: pointer;
+
+}
+
+.buton:hover {
+    background-color: green;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+li {
+    float: right;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: rgb(223, 73, 73);
+}
