@@ -49,6 +49,8 @@ def thinks(request):
     context = {"b":com,"a":"2/10"}
     return render(request,"movie/index.html",context)
 
+
+
 def movie_recommend(request):
 
     if request.method == "POST":
