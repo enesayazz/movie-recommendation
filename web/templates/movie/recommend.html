@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+</head>
+<style>
+  .butonout {
+    text-align: center;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+    font-family: sans-serif;
+    background: linear-gradient(to right, #c04848, #480048)
+  }
+
+  .toplist {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  .top3 {
+    float: right;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  li a:hover:not(.active) {
+    background-color: rgb(223, 73, 73);
+  }
+</style>
+ <body>
+  <ul class="toplist">
+    <li class="top3"><a href="signup">Sign Up</a></li>
+    <li class="top3"> <a href="signin">Sign In</a></li>
+    <li class="top3"><a href="/">Home</a></li>
+    <li class="top3"><a href="movie">Recommend</a></li>
+  </ul>
+  {% block content %}
+  
+  
+  
+  
+  <div class="movie" style="color: #E8E8E8;">
+    <center>
+      <h4>Movies similar to "{{c}}"</h4>
+    </center>
+  </div>
+  
+  <div class="list-recommend" style="margin-top: 50px;margin-bottom: 70px;text-align: center;">
+    <ul class="list-group list-group-flush"
+      style="margin-left: auto;margin-right: auto;text-align: center;width: 40%;color: #E8E8E8;">
+      {% for i in d %}
+      <li class="list-group-item" style="background-color:#e5091485;"><strong>{{i}}</strong></li>
+      {% endfor %}
+    </ul>
+  
+  </div>
+  
+  
+  {% endblock %}
+ 
+ </body> 
+
+

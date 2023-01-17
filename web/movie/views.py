@@ -19,6 +19,35 @@ from . import forms
 import pandas as pd
 nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+movlist=[]
+def mr ():
+    
+        df=pd.read_csv('final.csv')
+
+        movie_mat=pd.pivot_table(df,values='rating',index='title',columns='userId').fillna(0)
+        movie_mat_new=movie_mat.reset_index()
+
+        from scipy.sparse import csr_matrix
+        vec_movie_mat=csr_matrix(movie_mat.values)
+
+        from sklearn.neighbors import NearestNeighbors
+        knn = NearestNeighbors(metric = 'cosine', algorithm = 'brute')
+        knn.fit(vec_movie_mat)
+
+        
+        movie_mat_new[movie_mat_new['title']=='Matrix, The (1999)']
+
+        x=movie_mat.iloc[5512,:].values.reshape(1,-1)
+
+        distance,indices= knn.kneighbors(x, n_neighbors = 10)
+        lst=[]
+        for i in range(len(distance.flatten())):
+            lst.append(movie_mat.index[indices.flatten()][i])#,distance.flatten()[i])
+        for e in lst:
+            movlist.append(e)
+        movliste = movlist[1:11]
+        print(movliste)
+
 
 def home (request):
     context = {"a":"1/10"}
@@ -56,21 +85,44 @@ def movie_recommend(request):
     if request.method == "POST":
         filmval = request.POST.get("filmval")
 
-    
+        
     return render (request,"movie/movie.html")
 
 def movie_recommended(request):
     if request.method == "POST":
         filmval = request.POST.get("filmval")
+        
+        df=pd.read_csv('final.csv')
 
+        movie_mat=pd.pivot_table(df,values='rating',index='title',columns='userId').fillna(0)
+        movie_mat_new=movie_mat.reset_index()
+
+        from scipy.sparse import csr_matrix
+        vec_movie_mat=csr_matrix(movie_mat.values)
+
+        from sklearn.neighbors import NearestNeighbors
+        knn = NearestNeighbors(metric = 'cosine', algorithm = 'brute')
+        knn.fit(vec_movie_mat)
+
+        
+        movie_mat_new[movie_mat_new['title']=="Screamers (1995)"]
+
+        x=movie_mat.iloc[5512,:].values.reshape(1,-1)
+
+        distance,indices= knn.kneighbors(x, n_neighbors = 10)
+        lst=[]
+        for i in range(len(distance.flatten())):
+            lst.append(movie_mat.index[indices.flatten()][i])#,distance.flatten()[i])
+        for e in lst:
+            movlist.append(e)
+        movliste = movlist[1:11]
+        
+            
     
-
-
-
-
-
-    context={"c":filmval}
-    return render (request,"movie/movie.html",context)
+    context={"c":filmval,"d":movliste,"i":i}
+    
+    return render (request,"movie/recommend.html",context)
+    
 
 
 def signup (request,):

@@ -7,12 +7,25 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
 
     </head>
     <style>
-        h1 {
-            text-align: center;
+         h1 {
+            font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #e50914;
+            font-weight: bold;
+            margin-top: 30px;
         }
+        
         h3{
             text-align: center;
         }
@@ -53,6 +66,20 @@
         li a:hover:not(.active) {
             background-color: rgb(223, 73, 73);
         }
+        .movie {
+            color: #fff;
+            margin-left: auto;
+            margin-right: auto;
+            resize: none;
+        }
+
+        .btn-block {
+            width: 15%;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            color: #e4e0e0;
+        }
 
     </style>
     <body>
@@ -60,6 +87,7 @@
             <li><a href="signup">Sign Up</a></li>
             <li><a href="signin">Sign In</a></li>
             <li><a href="/">Home</a></li>
+            <li class="top3"><a href="movie">Recommend</a></li>
         </ul>
         {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -70,21 +98,32 @@
         </div>
         {% endfor %}
             
-        <h1>Welcome To the Site</h1>
+    <center>
+        <h1> Movie Recommendation System</h2>
+    </center>
 
             {% if user.is_authenticated %}
-            <h3>hello {{fname}} you are logged in</h3>
             
-        <form method="post" action="thinks">
-            {% csrf_token %}
-            <label for="">What Do You Think{{a}}</label>
-            <input type="text" id="think" name="thinkval">
-            <input type="submit" value="Submit">
-            <label for="">{{b}}</label>
-        </form>
-
+            
+      
         
+        <div class="form-group shadow-textarea" style="margin-top: 30px;text-align: center;color: white;">
+            <form method="post" action="thinks">
+                {% csrf_token %}
+                <label for="">What Do You Think {{a}}</label>
+        
+                <input type="text" name="thinkval" class="movie form-control"
+                    style="background-color: #ffffff;border-color:#ffffff;width: 60%;color: #181818">
+                <div class="form-group" style="text-align: center;"></div>
+                <input type="submit" value="Submit" class="btn btn-primary btn-block"
+                    style="background-color: #e50914;text-align: center;border-color: #e50914; width:250px ;">
+        </div>
+        <center>
+            <label for="">{{b}}</label> <br>
             <button type="submit"><a href="/signout"> signout</a></button>
+        </center>
+        
+        </form>
             
 
             
