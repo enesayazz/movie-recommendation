@@ -20,17 +20,23 @@ import pandas as pd
 nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from . import recommend
+import random
 
+def landing(request):
 
-def home (request):
-    context = {"a":"1/10"}
+    return render(request,"movie/landing.html")
+
+def home (request):  
+    random_movie=random.choice(recommend.df)
+
+    context = {"mov":random_movie}
     return render(request,"movie/index.html",context)
 
 def thinks(request):
     if request.method == "POST":
         thinkval= request.POST.get("thinkval")
-    
-       
+        random_movie=random.choice(recommend.df)
+      
         text = thinkval
         analyzer = SentimentIntensityAnalyzer()
         scores = analyzer.polarity_scores(text)
@@ -40,13 +46,23 @@ def thinks(request):
         neu = scores.get('neu')
         list = [pos,neg,neu]
         if max(list) == pos:
-            com = "You liked it"
+            com = "Then you should check this out"
+            rec=(recommend.get_recommendations(random_movie))
+            rec=rec[0:1]
+            
+            for s in rec :
+                print(s)
         elif max(list) == neg:
-            com = "you did not like it"
+            com = "Let's try another one"
+            s=""
+        elif max(list)==neu:
+            com = "Let's try another one"
+            s=""
         else:
-            com = "you are neutural or don't know it"
+            com=""
+            s=""
     
-    context = {"b":com,"a":"2/10"}
+    context = {"b":com,"mov":random_movie,"recom":s,}
     return render(request,"movie/index.html",context)
 
 
@@ -157,7 +173,7 @@ def signin (request):
 def signout (request):
     logout(request)
     messages.success(request, "logged out")
-    return redirect('home')
+    return redirect('landing')
 
 def activate(request, uidb64, token):
     try:

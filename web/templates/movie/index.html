@@ -68,6 +68,9 @@
                         <a class="nav-link" href="/movie">Recommend</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/sentiment">Sentiment</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link " href="/signup">Sign Up</a>
                     </li>
                     <li class="nav-item">
@@ -98,16 +101,16 @@
         <div class="form-group shadow-textarea" style="margin-top: 30px;text-align: center;color: white;">
             <form method="post" action="thinks">
                 {% csrf_token %}
-                <label for="">What Do You Think {{a}}</label>
+                <label for="">What Do You Think About <b>"{{mov}}"</b></label>
         
-                <input type="text" name="thinkval" class="movie form-control"
+                <input type="text" required name="thinkval" class="movie form-control"
                     style="background-color: #ffffff;border-color:#ffffff;width: 60%;color: #181818">
                 <div class="form-group" style="text-align: center;"></div>
                 <input type="submit" value="Submit" class="btn btn-primary btn-block"
                     style="background-color: #e50914;text-align: center;border-color: #e50914; width:250px ;">
         </div>
         <center>
-            <label for="">{{b}}</label> <br>
+            <label for="">{{b}},{{recom}}</label> <br>
             <button type="submit"><a href="/signout"> signout</a></button>
         </center>
         

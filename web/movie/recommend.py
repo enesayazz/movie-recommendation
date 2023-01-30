@@ -9,7 +9,7 @@ from ast import literal_eval
 
 credits_df = pd.read_csv("tmdb_5000_credits.csv")
 movies_df = pd.read_csv(   "tmdb_5000_movies.csv")
-
+df=movies_df["title"]
 credits_df.columns = ['id','tittle','cast','crew']
 movies_df = movies_df.merge(credits_df, on="id")
 
@@ -52,3 +52,77 @@ def get_recommendations(title, cosine_sim=cosine_sim):
     movies_indices = [ind[0] for ind in sim_scores]
     movies = movies_df["title"].iloc[movies_indices]
     return movies
+features = ["cast", "crew", "keywords", "genres"]
+
+for feature in features:
+    movies_df[feature] = movies_df[feature].apply(literal_eval)
+
+movies_df[features].head(10)
+
+
+
+def get_director(x):
+    for i in x:
+        if i["job"] == "Director":
+            return i["name"]
+    return np.nan
+
+
+
+def get_list(x):
+    if isinstance(x, list):
+        names = [i["name"] for i in x]
+
+        if len(names) > 3:
+            names = names[:3]
+
+        return names
+
+    return []
+
+
+
+movies_df["director"] = movies_df["crew"].apply(get_director)
+
+features = ["cast", "keywords", "genres"]
+for feature in features:
+    movies_df[feature] = movies_df[feature].apply(get_list)
+
+
+
+movies_df[['title', 'cast', 'director', 'keywords', 'genres']].head()
+
+
+def clean_data(x):
+    if isinstance(x, list):
+        return [str.lower(i.replace(" ", "")) for i in x]
+    else:
+        if isinstance(x, str):
+            return str.lower(x.replace(" ", ""))
+        else:
+            return ""
+
+
+features = ['cast', 'keywords', 'director', 'genres']
+for feature in features:
+    movies_df[feature] = movies_df[feature].apply(clean_data)
+
+
+
+def create_soup(x):
+    return ' '.join(x['keywords']) + ' ' + ' '.join(x['cast']) + ' ' + x['director'] + ' ' + ' '.join(x['genres'])
+
+
+movies_df["soup"] = movies_df.apply(create_soup, axis=1)
+
+
+count_vectorizer = CountVectorizer(stop_words="english")
+count_matrix = count_vectorizer.fit_transform(movies_df["soup"])
+
+
+
+cosine_sim2 = cosine_similarity(count_matrix, count_matrix)
+
+
+movies_df = movies_df.reset_index()
+indices = pd.Series(movies_df.index, index=movies_df['title'])
