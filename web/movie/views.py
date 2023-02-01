@@ -37,16 +37,15 @@ def thinks(request):
         thinkval= request.POST.get("thinkval")
         random_movie=random.choice(recommend.df)
       
-        text = thinkval
         analyzer = SentimentIntensityAnalyzer()
-        scores = analyzer.polarity_scores(text)
-        print(f'Overall sentiment: {scores}')
+        scores = analyzer.polarity_scores(thinkval)
+        
         pos = scores.get('pos')
         neg = scores.get('neg')
         neu = scores.get('neu')
         list = [pos,neg,neu]
         if max(list) == pos:
-            com = "Then you should check this out"
+            com = "Then you should check this out:"
             rec=(recommend.get_recommendations(random_movie))
             rec=rec[0:1]
             
@@ -55,12 +54,15 @@ def thinks(request):
         elif max(list) == neg:
             com = "Let's try another one"
             s=""
+            
         elif max(list)==neu:
             com = "Let's try another one"
             s=""
+            
         else:
             com=""
             s=""
+            
     
     context = {"b":com,"mov":random_movie,"recom":s,}
     return render(request,"movie/index.html",context)
@@ -162,7 +164,7 @@ def signin (request):
         if user is not None:
             login(request, user)
             fname = user.first_name   
-            return render(request, "movie/index.html",{'fname':fname})
+            return render(request, "movie/landing.html",{'fname':fname})
 
         else:
             messages.error(request, "Username Or Password Wrong !")
